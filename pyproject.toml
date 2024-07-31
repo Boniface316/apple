@@ -1,0 +1,94 @@
+[tool.poetry]
+name = "orange"
+version = "0.1.0"
+description = "A short description of the project"
+repository = "https://github.com/username/repository"
+documentation = "https://username.github.io/repository"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+license = "MIT"
+keywords = ["keyword1", "keyword2", "keyword3", ]
+packages = [{ include = "orange", from = "src" }]
+
+[tool.poetry.scripts]
+orange = 'orange.scripts:main'
+
+[tool.poetry.dependencies]
+python = "^3.9"
+loguru = "^0.7.2"
+numpy = "^1.26.4"
+pandas = "^2.2.1"
+pyarrow = "^15.0.1"
+pydantic = "^2.6.4"
+pydantic-settings = "^2.2.1"
+
+[tool.poetry.group.checks.dependencies]
+bandit = "^1.7.8"
+coverage = "^7.4.3"
+mypy = "^1.9.0"
+pytest = "^8.1.1"
+pytest-cov = "^4.1.0"
+pytest-xdist = "^3.5.0"
+pandera = { extras = ["mypy"], version = "^0.18.3" }
+ruff = "^0.3.3"
+
+[tool.poetry.group.commits.dependencies]
+commitizen = "^3.18.3"
+pre-commit = "^3.6.2"
+
+[tool.poetry.group.dev.dependencies]
+invoke = "^2.2.0"
+
+[tool.poetry.group.docs.dependencies]
+pdoc = "^14.4.0"
+
+[tool.poetry.group.notebooks.dependencies]
+ipykernel = "^6.29.3"
+nbformat = "^5.10.2"
+
+[tool.bandit]
+targets = ["src"]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "v$version"
+version_scheme = "pep440"
+version_provider = "poetry"
+changelog_start_rev = "v0.1.0"
+update_changelog_on_bump = true
+
+[tool.coverage.run]
+branch = true
+source = ["src"]
+omit = ["__main__.py"]
+
+[tool.mypy]
+pretty = true
+strict = true
+python_version = "3.9"
+check_untyped_defs = true
+ignore_missing_imports = true
+plugins = ["pandera.mypy", "pydantic.mypy"]
+
+[tool.pytest.ini_options]
+addopts = "--verbosity=2"
+pythonpath = ["src"]
+
+[tool.ruff]
+fix = true
+indent-width = 4
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["D100", "D103"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
